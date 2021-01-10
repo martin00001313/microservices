@@ -1,0 +1,29 @@
+server:
+    port: 8771
+
+spring:
+    application:
+        name: server1
+    cloud:
+        discovery:
+            service-id: ${spring.application.name}
+            enablrd: true
+    data:
+        mongodb:
+            uri: mongodb://localhost:27017
+            database: test
+            repostories:
+                enabled: true
+    
+eureka:
+  instance:  
+    leaseRenewalIntervalInSeconds: 10
+    prefer-ip-address: true
+    leaseExpirationDurationInSeconds: 3
+  client:
+    enabled: true
+    registryFetchIntervalSeconds: 5
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
