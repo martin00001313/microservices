@@ -1,0 +1,41 @@
+version: '3.3'
+services:
+    eurekanode:
+        image: eurekanode
+        build: ./eurekanode
+        env_file: .env
+        container_name: eurekanode
+        hostname: eurekanode
+        ports:
+            - '8761:8761'
+        networks:
+            - spring-cloud-network
+    service1:
+        image: service1
+        build: ./service1
+        env_file: .env
+        container_name: service1
+        hostname: service
+        ports:
+            - '8771:8771'
+        links:
+            - eurekanode
+        networks:
+            - spring-cloud-network
+    service2:
+        image: service2
+        build: ./service2
+        env_file: .env
+        container_name: service2
+        hostname: service2
+        links:
+            - service2
+        depends_on:
+            - service1
+        ports:
+            - '8772:8772'
+        networks:
+            - spring-cloud-network
+networks:
+    spring-cloud-network:
+        driver: bridge
